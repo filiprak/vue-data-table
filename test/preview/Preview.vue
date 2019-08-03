@@ -18,7 +18,35 @@
             <div class="container-fluid">
                 <div class="row py-5">
                     <div v-show="nav === 0" class="col">
-                        <v-data-table></v-data-table>
+                        <v-data-table
+                            :header="header1"
+                            :data="data1"
+                            :sizes="[30, 30, 20, 20]"
+                        >
+                            <template v-slot:header="props">
+                                <span>Name</span>
+                                <span>Surname</span>
+                                <span>Status</span>
+                                <span>Actions</span>
+                            </template>
+                            <template v-slot:row="props">
+                                <div>
+                                    {{props.data.name}}
+                                </div>
+                                <div>
+                                    {{props.data.surname}}
+                                </div>
+                                <div>
+                                    <div v-if="props.data.active" class="badge badge-success">Active</div>
+                                    <div v-else class="badge badge-danger">Off</div>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-info btn-sm">Edit</button>
+                                    <button class="btn btn-success btn-sm">Save</button>
+                                    <button class="btn btn-danger btn-sm">Remove</button>
+                                </div>
+                            </template>
+                        </v-data-table>
                     </div>
                     <div v-show="nav === 1" class="col">
                         <v-data-table></v-data-table>
@@ -42,7 +70,16 @@
         components: {VDataTable},
         data() {
             return {
-                nav: 0
+                nav: 0,
+
+                header1: [
+                    {value: 'name'},
+                    {value: 'surname'},
+                ],
+                data1: [
+                    {name: 'John', surname: 'Travolta', active: true},
+                    {name: 'Adam', surname: 'Savage', active: false},
+                ],
             };
         },
         methods: {
